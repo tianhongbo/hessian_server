@@ -17,3 +17,10 @@ The war file ("server.war") is generated in the "target/".
 ````
 sudo service jetty restart
 ````
+
+# How do I verify the server running well?
+````
+curl http://localhost:8080/server/
+curl http://localhost:8080/server/test
+````
+
