@@ -23,4 +23,5 @@ sudo service jetty restart
 curl http://localhost:8080/server/
 curl http://localhost:8080/server/test
 ````
-
+# resources
+[Hessian client](https://github.com/tianhongbo/hessian_client)
