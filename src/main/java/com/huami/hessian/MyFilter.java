@@ -32,34 +32,34 @@ public class MyFilter implements Filter  {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-		ResettableStreamHttpServletRequest wrappedRequest = new ResettableStreamHttpServletRequest((HttpServletRequest) request);
-		//wrappedRequest.getInputStream().read();
-		String body = IOUtils.toString(wrappedRequest.getReader());
-		HttpServletRequest req = (HttpServletRequest)wrappedRequest;
-		String url = req.getRequestURL().toString();
-		System.out.println("scott: " + url);
+//		ResettableStreamHttpServletRequest wrappedRequest = new ResettableStreamHttpServletRequest((HttpServletRequest) request);
+//		//wrappedRequest.getInputStream().read();
+//		String body = IOUtils.toString(wrappedRequest.getReader());
+//		HttpServletRequest req = (HttpServletRequest)wrappedRequest;
+		
+		HttpServletRequest req = (HttpServletRequest)request;
 		X509Certificate[] certs = (X509Certificate[]) req.getAttribute("javax.servlet.request.X509Certificate");
 		if (null != certs && certs.length > 0) {
-			System.out.println("scott: cert found");
+			System.out.println("scott filter: cert found");
 			for(X509Certificate c : certs) {
  				try {
  					//Subject DN
 					String subjectDn = c.getSubjectDN().getName();
 					LdapName subjectLn = new LdapName(subjectDn);
-					System.out.println("Subject DN: "+ c.getSubjectDN().getName());
+					System.out.println("filter Subject DN: "+ c.getSubjectDN().getName());
 					for(Rdn rdn : subjectLn.getRdns()) {
 						if(rdn.getType().equalsIgnoreCase("CN")) {
-							System.out.println("Subject CN is: " + rdn.getValue());
+							System.out.println("filter Subject CN is: " + rdn.getValue());
 						}
 					}
 					
 					//Issuer DN
 					String issuerDn = c.getIssuerDN().getName();
 					LdapName issuerLn = new LdapName(issuerDn);
-					System.out.println("Issuer DN: " + c.getIssuerDN().getName());
+					System.out.println("filter Issuer DN: " + c.getIssuerDN().getName());
 					for(Rdn rdn : issuerLn.getRdns()) {
 						if(rdn.getType().equalsIgnoreCase("CN")) {
-							System.out.println("Issuer CN is: " + rdn.getValue());
+							System.out.println("filter Issuer CN is: " + rdn.getValue());
 						}
 					}
 
@@ -71,9 +71,10 @@ public class MyFilter implements Filter  {
 		}
 		
 		//reset the req input stream
-		wrappedRequest.resetInputStream();
-		chain.doFilter(wrappedRequest, response);
-
+//		wrappedRequest.resetInputStream();
+//		chain.doFilter(wrappedRequest, response);
+		chain.doFilter(request, response);
+		return;
 	}
 	public void destroy( ) {
 		/* Called before the Filter instance is removed 

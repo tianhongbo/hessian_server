@@ -13,7 +13,17 @@
 		<url-pattern>/test</url-pattern>
 	</servlet-mapping>
 
-<!-- 	<filter>
+    <servlet>
+        <servlet-name>TestLatencyServlet</servlet-name>
+        <servlet-class>com.huami.hessian.TestLatencyServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TestLatencyServlet</servlet-name>
+        <url-pattern>/client</url-pattern>
+    </servlet-mapping>
+
+	<filter>
 		<display-name>MyFilter</display-name>
 		<filter-name>MyFilter</filter-name>
 		<filter-class>com.huami.hessian.MyFilter</filter-class>
@@ -21,7 +31,7 @@
 	<filter-mapping>
 		<filter-name>MyFilter</filter-name>
 		<url-pattern>/test</url-pattern>
-	</filter-mapping> -->
+	</filter-mapping>
 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
